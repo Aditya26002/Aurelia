@@ -1,9 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com"],
-    domains: ["images.unsplash.com"],
-    domains: ["images.pexels.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+      },
+      {
+        protocol: "https",
+        hostname: "static.wixstatic.com",
+      },
+    ],
   },
 };
 
