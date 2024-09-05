@@ -19,8 +19,8 @@ const Navbar = () => {
       {/* DESKTOP */}
       <div className="hidden md:flex items-center justify-between gap-6 h-full">
         {/* LEFT */}
-        <div className="w-1/3 xl:w-1/2 flex items-center gap-12">
-          <Link href={"/"} className="flex items-center">
+        <div className="w-1/3 xl:w-1/2 flex items-center ">
+          <Link href={"/"} className="flex items-center pr-20">
             <Image src="/Logo.png" alt="logo" width={50} height={50} />
             <div className="text-2xl tracking-wider">AURELIA</div>
           </Link>
