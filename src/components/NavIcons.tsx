@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import CartModal from "./CartModal";
+import { useWixClient } from "@/hooks/useWixClient";
 
 const NavIcons = () => {
   const router = useRouter();
@@ -21,6 +22,17 @@ const NavIcons = () => {
     setIsProfileOpen((prev) => !prev);
   };
 
+  // const wixClient = useWixClient();
+
+  // const login = async () => {
+  //   const loginRequestData = wixClient.auth.generateOAuthData(
+  //     "http://localhost:3000"
+  //   );
+  //   localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
+  //   const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
+  //   window.location.href = authUrl;
+  // };
+
   return (
     <div className="flex items-center justify-between gap-4 md:gap-6">
       <Image
@@ -30,6 +42,7 @@ const NavIcons = () => {
         height={22}
         onClick={handleProfile}
         className="cursor-pointer"
+        // onClick={login}
       />
       {isProfileOpen && (
         <div className="absolute top-16 rounded-md p-4 text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20">
