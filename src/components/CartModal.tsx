@@ -1,78 +1,76 @@
 "use client";
 
+import { useWixClient } from "@/hooks/useWixClient";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
+import { useCartStore } from "./../hooks/useCartStore";
+import { media as wixMedia } from "@wix/sdk";
 
 const CartModal = () => {
-  const cartItems = true;
+  // const cartItems = true;
+
+  const { cart, isLoading } = useCartStore();
 
   return (
-    <div className=" absolute  p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white top-16 right-16 flex flex-col gap-6 z-20">
-      {!cartItems ? (
+    <div className="p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white flex flex-col gap-6 z-20">
+      {isLoading ? (
+        "Loading..."
+      ) : !cart.lineItems ? (
         <div className="">Cart is empty</div>
       ) : (
         <>
           <h2 className="text-xl">Shopping Cart</h2>
           <div className="flex flex-col gap-8">
-            {/* ITEM 1 */}
-            <div className="flex gap-4">
-              <Image
-                src={
-                  "https://images.unsplash.com/photo-1721048149858-139c52892fc9?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                }
-                alt=""
-                width={72}
-                height={96}
-                className="object-cover rounded-md"
-              />
-              <div className="flex flex-col justify-between w-full">
-                {/* TOP */}
-                <div className="">
-                  {/*TITLE */}
-                  <div className="flex items-center justify-between gap-8">
-                    <h3 className="font-semibold">Product Name</h3>
-                    <div className="p-1 bg-gray-50 rounded-sm">$49</div>
+            {/* ITEM */}
+            {cart.lineItems.map((item) => (
+              <div className="flex gap-4" key={item._id}>
+                {item.image && (
+                  <Image
+                    src={wixMedia.getScaledToFillImageUrl(
+                      item.image,
+                      72,
+                      96,
+                      {}
+                    )}
+                    alt=""
+                    width={72}
+                    height={96}
+                    className="object-cover rounded-md"
+                  />
+                )}
+
+                <div className="flex flex-col justify-between w-full">
+                  {/* TOP */}
+                  <div className="">
+                    {/*TITLE */}
+                    <div className="flex items-center justify-between gap-8">
+                      <h3 className="font-semibold">
+                        {item.productName?.original}
+                      </h3>
+                      <div className="p-1 bg-gray-50 rounded-sm">
+                        ₹{item.price?.amount}
+                      </div>
+                    </div>
+                    {/* DESC */}
+                    <div className="text-sm text-gray-500">
+                      {item.availability?.status}
+                    </div>
                   </div>
-                  {/* DESC */}
-                  <div className="text-sm text-gray-500">available</div>
-                </div>
-                {/*BOTTOM */}
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Qty. 2</span>
-                  <span className="text-blue-500">Remove</span>
+                  {/*BOTTOM */}
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Qty. {item.quantity}</span>
+                    <span
+                      className="text-blue-500 cursor-pointer"
+                      onClick={() => {}}
+                    >
+                      Remove
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* ITEM 2 */}
-            <div className="flex gap-4">
-              <Image
-                src={
-                  "https://images.unsplash.com/photo-1721048149858-139c52892fc9?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                }
-                alt=""
-                width={72}
-                height={96}
-                className="object-cover rounded-md"
-              />
-              <div className="flex flex-col justify-between w-full">
-                {/* TOP */}
-                <div className="">
-                  {/*TITLE */}
-                  <div className="flex items-center justify-between gap-8">
-                    <h3 className="font-semibold">Product Name</h3>
-                    <div className="p-1 bg-gray-50 rounded-sm">$49</div>
-                  </div>
-                  {/* DESC */}
-                  <div className="text-sm text-gray-500">available</div>
-                </div>
-                {/*BOTTOM */}
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Qty. 2</span>
-                  <span className="text-blue-500">Remove</span>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
+
           {/* TOTAL */}
           <div className="">
             <div className="flex items-center justify-between font-semibold">

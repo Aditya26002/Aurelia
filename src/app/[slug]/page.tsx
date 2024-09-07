@@ -4,6 +4,8 @@ import CustomizeProducts from "@/components/CustomizeProducts";
 import Add from "@/components/Add";
 import { wixClientServer } from "@/lib/wixClientServer";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import Reviews from "@/components/Reviews";
 
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
   const wixClient = await wixClientServer();
@@ -33,14 +35,14 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
 
         {/* PRICE */}
         {product.price?.price === product.price?.discountedPrice ? (
-          <h2 className="font-medium text-2xl">₹{product.price?.price}</h2>
+          <h2 className="font-medium text-2xl">${product.price?.price}</h2>
         ) : (
           <div className=" flex items-center gap-4">
             <h3 className="text-xl text-gray-500 line-through">
-              ₹{product.price?.price}
+              ${product.price?.price}
             </h3>
             <h2 className="font-medium text-2xl">
-              ₹{product.price?.discountedPrice}
+              ${product.price?.discountedPrice}
             </h2>
           </div>
         )}
@@ -67,6 +69,10 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
             <p>{section.description}</p>
           </div>
         ))}
+        <h1 className="text-2xl">User Reviews</h1>
+        <Suspense fallback="Loading...">
+          <Reviews productId={product._id!} />
+        </Suspense>
       </div>
     </div>
   );
