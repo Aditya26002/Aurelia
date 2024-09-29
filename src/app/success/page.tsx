@@ -1,7 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, Suspense } from "react";
-import dynamic from "next/dynamic";
 import Confetti from "react-confetti";
 
 const SuccessPage = () => {
@@ -37,6 +36,4 @@ const SuccessPageWrapper = () => (
   </Suspense>
 );
 
-export default dynamic(() => Promise.resolve(SuccessPageWrapper), {
-  ssr: false,
-});
+export default SuccessPageWrapper;
