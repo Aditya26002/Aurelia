@@ -86,7 +86,7 @@ const NavIcons = () => {
           height={22}
           onClick={() => setIsCartOpen((prev) => !prev)}
         />
-        <div className="absolute -top-4 -right-4 w-6 h-6 bg-lama rounded-full text-sm flex items-center justify-center text-white">
+        <div className="absolute -top-3 -right-3 w-5 h-5 bg-lama rounded-full text-sm flex items-center justify-center text-white">
           {counter}
         </div>
       </div>
